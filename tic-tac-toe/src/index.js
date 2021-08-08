@@ -2,17 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-// 正方形のマス目
-class Square extends React.Component {
-    render() {
-        return (
-        // マス目をクリックしたら、Squareのvalueを'X'にする
+// 正方形のマス目 => 関数コンポーネント
+function Square(props) {
+    return (
         <button className="square"
-                onClick={() => this.props.onClick()}>
-            {this.props.value}
+                onClick={() => props.onClick()}>
+            {props.value}
         </button>
-        );
-    }
+    )
 }
 
 // 盤面
@@ -21,13 +18,17 @@ class Board extends React.Component {
         super(props);
         this.state = {
             squares: Array(9).fill(null),
+            xIsNext: true,
         };
     }
 
     handleClick(i) {
         const squares = this.state.squares.slice();
-        squares[i] = 'X';
-        this.setState({squares: squares});
+        squares[i] = this.state.xIsNext ? 'X' : 'O';
+        this.setState({
+            squares: squares,
+            xIsNext: !this.state.xIsNext,
+        });
     }
 
     renderSquare(i) {
@@ -39,7 +40,7 @@ class Board extends React.Component {
     }
 
     render() {
-        const status = 'Next player: X';
+        const status = 'Next player:' + (this.state.xIsNext ? 'X' : 'O');
 
         return (
             <div>
