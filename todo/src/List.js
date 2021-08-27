@@ -1,16 +1,18 @@
-const LANGUAGES = [
-    'JavaScript',
-    'C++',
-    'Ruby',
-    'Java',
-    'Go'
-]
+import { useEffect } from "react"
 
-export const List = () => {
+export const List = ({langs}) => {
+
+    useEffect(() => {
+        console.log('List');
+
+        return () => {
+            console.log("List unmount");
+        }
+    })
     return (
         <div>
             {
-                LANGUAGES.map((lang, index) => {
+                langs.map((lang, index) => {
                     return <div key={index}>{lang}</div>
                 })
             }
