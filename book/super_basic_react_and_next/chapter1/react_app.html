@@ -18,16 +18,30 @@
         let dom = document.querySelector("#root");
 
         let title = "new title";
-        let message = "new message";
+        let message = "message present";
+        let in_val = "";
 
-        let el = (
-            <div className="alert alert-primary">
-                <h2>{ title }</h2>
-                <p>{ message }</p>
-            </div>
-        );
+        let doChange = (event) => {
+            in_val = event.target.value;
+            message = "hello, " + in_val
+        }
 
-        ReactDOM.render(el, dom);
+        let doAction = (event) => {
+            let el = (
+                <div>
+                    <h4>{title}</h4>
+                    <h6>{message}</h6>
+                    <div className="alert alert-primary">
+                        <label>Input: </label>
+                        <input type="text" className="form-control" id="input" onChange={doChange} />
+                    </div>
+                    <button onClick={doAction} className="btn btn-primary">Click</button>
+                </div>
+            )
+            ReactDOM.render(el, dom)
+        }
+
+        doAction()
         </script>
     </body>
 </html>
