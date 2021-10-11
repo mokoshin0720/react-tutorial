@@ -1,63 +1,70 @@
 import './App.css';
-import React, { useContext } from 'react';
+import React, { useState } from 'react';
 
-let theme = {
-  light: {
-    styles: {
-      backgroundColor: "#f0f9ff",
-      color: "#00f",
-    },
-    head: "bg-primary text-white display-4 mb-4",
-    alert: "alert alert-primary my-3",
-    text: "text-primary m-3",
-    foot: "py-4"
-  },
-  dark: {
-    styles: {
-      backgroundColor: "#336",
-      color: "#eef"
-    },
-    head: "bg-secondary text-white display-4 mb-4",
-    alert: "alert alert-dark my-3",
-    text: "text-light m-3",
-    foot: "py-4",
+const App = () => {
+  const [name, setName] = useState("")
+  const [mail, setMail] = useState("")
+  const [age, setAge] = useState(0)
+  const [form, setForm] = useState({
+    name: "no name",
+    mail: "no mail",
+    age: 0
+  })
+
+  const doChangeName = (event) => {
+    setName(event.target.value)
   }
-}
-
-const ThemeContext = React.createContext(theme.dark)
-
-function App() {
-  const contextType = useContext(ThemeContext)
+  const doChangeMail = (event) => {
+    setMail(event.target.value)
+  }
+  const doChangeAge = (event) => {
+    setAge(event.target.value)
+  }
+  const doSubmit = (event) => {
+    setForm({name: name, mail: mail, age: age})
+    event.preventDefault()
+  }
 
   return (
-    <div style={contextType.styles}>
-      <h1 className={contextType.head}>React</h1>
+    <div>
+      <h1 className="bg-primary text-white display-4">React</h1>
       <div className="container">
-        <Title value="Content page" />
-        <Message value="This is Content sample." />
-        <Message value="これはテーマのサンプル" />
-        <div className={contextType.foot}></div>
+        <h4 className="my-3">Hooks sample</h4>
+        <AlertMessage data={form} setData={setForm} />
+        <form onSubmit={doSubmit}>
+          <div className="form-group">
+            <label>Name: </label>
+            <input type="text" className="form-control" onChange={doChangeName} />
+          </div>
+          <div className="form-group">
+            <label>Mail: </label>
+            <input type="text" className="form-control" onChange={doChangeMail} />
+          </div>
+          <div className="form-group">
+            <label>Age: </label>
+            <input type="text" className="form-control" onChange={doChangeAge} />
+          </div>
+          <input type="submit" className="btn btn-primary" value="Click" />
+        </form>
       </div>
-    </div>
-  );
-}
-
-function Title(props) {
-  const sample = useContext(ThemeContext)
-
-  return (
-    <div className={sample.alert}>
-      <h2 style={sample.styles}>{props.value}</h2>
     </div>
   )
 }
 
-function Message(props) {
-  const sample = useContext(ThemeContext)
+const AlertMessage = (props) => {
+  const data = props.data
+  const msg = JSON.stringify(props.data)
 
   return (
-    <div style={sample.styles}>
-      <p className={sample.text}>{props.value}</p>
+    <div className="alert alert-primary h5 text-primary">
+      <h5>{msg}</h5>
+      <table className="table h6">
+        <tbody>
+          <tr><th>Name</th><td>{data.name}</td></tr>
+          <tr><th>Mail</th><td>{data.mail}</td></tr>
+          <tr><th>Age</th><td>{data.age}</td></tr>
+        </tbody>
+      </table>
     </div>
   )
 }
