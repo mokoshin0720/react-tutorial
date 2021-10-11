@@ -1,43 +1,63 @@
 import './App.css';
 import React, { useContext } from 'react';
 
-let data = {
-  title: "React-Context",
-  message: "this is sample message."
+let theme = {
+  light: {
+    styles: {
+      backgroundColor: "#f0f9ff",
+      color: "#00f",
+    },
+    head: "bg-primary text-white display-4 mb-4",
+    alert: "alert alert-primary my-3",
+    text: "text-primary m-3",
+    foot: "py-4"
+  },
+  dark: {
+    styles: {
+      backgroundColor: "#336",
+      color: "#eef"
+    },
+    head: "bg-secondary text-white display-4 mb-4",
+    alert: "alert alert-dark my-3",
+    text: "text-light m-3",
+    foot: "py-4",
+  }
 }
 
-const SampleContext = React.createContext()
+const ThemeContext = React.createContext(theme.dark)
 
 function App() {
+  const contextType = useContext(ThemeContext)
+
   return (
-    <div className="App">
-      <h1 className="bg-primary text-white display-4">React</h1>
+    <div style={contextType.styles}>
+      <h1 className={contextType.head}>React</h1>
       <div className="container">
-        <SampleContext.Provider value={data}>
-          <Title />
-          <Message />
-        </SampleContext.Provider>
+        <Title value="Content page" />
+        <Message value="This is Content sample." />
+        <Message value="これはテーマのサンプル" />
+        <div className={contextType.foot}></div>
       </div>
     </div>
   );
 }
 
-function Title() {
-  const sample = useContext(SampleContext)
+function Title(props) {
+  const sample = useContext(ThemeContext)
 
   return (
-    <div className="card p-2 my-3">
-      <h2>{sample.title}</h2>
+    <div className={sample.alert}>
+      <h2 style={sample.styles}>{props.value}</h2>
     </div>
   )
 }
 
-function Message() {
-  const sample = useContext(SampleContext)
+function Message(props) {
+  const sample = useContext(ThemeContext)
 
   return (
-    <div className="alert alert-primary">
-      <p>{sample.message}</p>
+    <div style={sample.styles}>
+      <p className={sample.text}>{props.value}</p>
     </div>
   )
 }
