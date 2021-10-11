@@ -1,58 +1,44 @@
 import './App.css';
+import React, { useContext } from 'react';
+
+let data = {
+  title: "React-Context",
+  message: "this is sample message."
+}
+
+const SampleContext = React.createContext()
 
 function App() {
-  let data = [
-    "This is list first sample",
-    "This is list second sample",
-    "This is list third sample",
-  ]
-
   return (
     <div className="App">
       <h1 className="bg-primary text-white display-4">React</h1>
       <div className="container">
-        <p className="subtitle">Show List.</p>
-        <List title="LISTS" data={data} />
+        <SampleContext.Provider value={data}>
+          <Title />
+          <Message />
+        </SampleContext.Provider>
       </div>
     </div>
   );
 }
 
-function List(props) {
+function Title() {
+  const sample = useContext(SampleContext)
+
   return (
-    <div>
-      <p className="h5 text-center">{props.title}</p>
-      <ul className="list-group">
-        {props.data.map((item, key) =>
-          <li className="list-group-item" key={key}>
-            <Item number={key+1} value={item} />
-          </li>
-        )}
-      </ul>
+    <div className="card p-2 my-3">
+      <h2>{sample.title}</h2>
     </div>
   )
 }
 
-function Item(props) {
-  let itm = {
-    fontSize: "16pt",
-    color: "#00f",
-    textDecoration: "underline",
-    textDecorationColor: "#ddf"
-  }
-
-  let num = {
-    fontWeight: "bold",
-    color: "red"
-  }
+function Message() {
+  const sample = useContext(SampleContext)
 
   return (
-    <p style={itm}>
-      <span style={num}>
-        [{props.number}]&nbsp;
-      </span>
-      {props.value}
-    </p>
+    <div className="alert alert-primary">
+      <p>{sample.message}</p>
+    </div>
   )
 }
 
