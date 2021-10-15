@@ -1,37 +1,12 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import Header from "./header"
 
 export default function Home() {
   let title = "Next.js page"
   let message = "React Next.js sample page"
 
-  const h1 = {
-    textAlign: "right",
-    padding: "5px 15px"
-  }
-
-  const p = {
-    textAlign: "left",
-    margin: "0px 5px",
-    color: "#669",
-    fontSize: "18pt"
-  }
-
-  const subtitle = {
-    textAlign: "center",
-    margin: "0px 5px",
-    color: "#99d",
-    fontSize: "24pt",
-    fontWeight: "bold"
-  }
-
   return (
     <div>
-      <Head>
-        <title>{title}</title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" crossOrigin="anonymous" />
-      </Head>
+      <Header title={title}></Header>
 
       <style jsx>{`
         h1 {
