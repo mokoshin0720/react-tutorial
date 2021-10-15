@@ -3,12 +3,25 @@ import useSWR from "swr"
 import { useState } from "react"
 
 export default function Home() {
-  const [address, setAddress] = useState("/api/hello")
-  const func = (...args) => fetch(...args).then(res => res.json())
+  const [pref, setPref] = useState({id: 0, item: "name"})
+  const [address, setAddress] = useState("/api/hello/" + pref.id + "/" + pref.item)
+  
+  const func = (...args) => fetch.apply(...args).then(res => res.json())
   const {data, err} = useSWR(address, func)
 
+  console.log(address)
+  console.log(data)
+
   const onChange = (e) => {
-    setAddress("/api/hello/" + e.target.value)
+    pref.id = e.target.value
+    setPref(pref)
+    setAddress("/api/hello/" + pref.id + "/" + pref.item)
+  }
+
+  const onSelect = (e) => {
+    pref.item = e.target.value
+    setPref(pref)
+    setAddress("/api/hello/" + pref.id + "/" + pref.item)
   }
 
   return (
@@ -18,7 +31,12 @@ export default function Home() {
           <h5 className="mb-4">
             {JSON.stringify(data)}
           </h5>
-          <input type="number" className="form-control" onChange={onChange} />
+          <input type="number" className="form-control form-control-sm mb-2" onChange={onChange} />
+          <select onChange={onSelect} className="form-control form-control-sm">
+            <option value="name">Name</option>
+            <option value="mail">Mail</option>
+            <option value="age">Age</option>
+          </select>
         </div>
       </Layout>
     </div>
