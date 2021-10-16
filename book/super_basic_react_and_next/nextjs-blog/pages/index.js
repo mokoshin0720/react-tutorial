@@ -11,8 +11,7 @@ export default function Home() {
 
       <main>
         <h1 className="title">
-          {/* Learn <Link href="/posts/first-post"><a>Next.js</a></Link> */}
-          Learn <a href="/posts/first-post">next.js</a>
+          Learn <Link href="/posts/first-post"><a>Next.js</a></Link>
         </h1>
 
         <p className="description">
@@ -57,7 +56,7 @@ export default function Home() {
           rel="noopener noreferrer"
         >
           Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel" className="logo" />
+          <img src="/img/logo.svg" alt="Vercel" className="logo" />
         </a>
       </footer>
 
