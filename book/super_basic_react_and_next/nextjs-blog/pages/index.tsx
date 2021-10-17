@@ -4,8 +4,9 @@ import utilStyles from '../styles/utils.module.css'
 import { getSortedPostsData } from '../lib/posts'
 import Link from 'next/link'
 import Date from '../components/date'
+import { GetStaticProps } from 'next'
 
-export async function getServerSideProps(context) {
+export const getStaticProps: GetStaticProps = async() => {
   const allPostsData = getSortedPostsData()
   return {
     props: {
@@ -14,7 +15,15 @@ export async function getServerSideProps(context) {
   }
 }
 
-export default function Home({allPostsData}) {
+type Props = {
+  allPostsData: {
+    id: string
+    title: string
+    date: string
+  }[]
+}
+
+export default function Home({ allPostsData }: Props) {
   return (
     <Layout home>
       <Head>
